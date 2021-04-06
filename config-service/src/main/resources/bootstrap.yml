@@ -6,10 +6,12 @@ spring:
   cloud:
     config:
       server:
-        git: https://github.com/PsyBrainy/microservice.git
-        searchPaths: config-data
-        username: ${GIT_USER}
-        password: ${GIT_PASS}
+        git:
+          uri: https://github.com/PsyBrainy/microservice.git
+          searchPaths: config-data
+          username: ${GIT_USER}
+          password: ${GIT_PASS}
+          default-label: "master"
   security:
     user:
       name: root
