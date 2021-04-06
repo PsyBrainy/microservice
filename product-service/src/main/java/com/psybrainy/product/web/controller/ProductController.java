@@ -1,5 +1,6 @@
 package com.psybrainy.product.web.controller;
 
+import com.psybrainy.product.domain.CategoryRequest;
 import com.psybrainy.product.domain.ProductRequest;
 import com.psybrainy.product.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class ProductController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("category/{categoryId}")
-    public ResponseEntity<List<ProductRequest>> getByCategoryId(@PathVariable("categoryId") Long categoryId) {
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<ProductRequest>> getByCategoryId(@PathVariable("categoryId") long categoryId) {
         return service.getByCategoryId(categoryId)
                 .map(productRequests -> new ResponseEntity<>(productRequests, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

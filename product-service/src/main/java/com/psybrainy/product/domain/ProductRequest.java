@@ -14,7 +14,7 @@ public class ProductRequest {
 
     private Double price;
 
-    private Long category;
+    private String category;
 
     private String status;
 

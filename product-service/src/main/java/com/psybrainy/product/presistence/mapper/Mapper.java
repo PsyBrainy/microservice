@@ -3,16 +3,16 @@ package com.psybrainy.product.presistence.mapper;
 import com.psybrainy.product.EntityException;
 import com.psybrainy.product.domain.ProductRequest;
 import com.psybrainy.product.presistence.crud.CategoryCrudRepository;
-import com.psybrainy.product.presistence.crud.ProductCrudRepository;
 import com.psybrainy.product.presistence.entity.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapper {
+public class Mapper {
 
     @Autowired
-    CategoryCrudRepository repo;
+    private CategoryCrudRepository repo;
+
 
     public ProductRequest toPorductRequest(ProductEntity productEntity){
 
@@ -22,7 +22,7 @@ public class ProductMapper {
                 .description(productEntity.getDescription())
                 .price(productEntity.getPrice())
                 .status(productEntity.getStatus())
-                .category(productEntity.getCategory().getCategoryId())
+                .category(productEntity.getCategory().getName())
                 .build();
     }
 
@@ -34,7 +34,8 @@ public class ProductMapper {
                 .price(productRequest.getPrice())
                 .description(productRequest.getDescription())
                 .status(productRequest.getStatus())
-                .category(repo.findById(productRequest.getPorductId()).orElseThrow(EntityException::new))
+                .category(repo.findByName(productRequest.getCategory()).orElseThrow(EntityException::new))
                 .build();
     }
+
 }
