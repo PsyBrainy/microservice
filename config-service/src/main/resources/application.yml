@@ -7,8 +7,9 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/PsyBrainy/microservice.git
-          searchPaths: tree/main/config-data
+          uri: https://github.com/psybrainy/microservice.git
+          default-label: main
+          searchPaths: config-data
           username: ${GIT_USER}
           password: ${GIT_PASS}
   security:
