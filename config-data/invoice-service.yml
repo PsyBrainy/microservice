@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/DB-invoise
+    url: jdbc:mysql://localhost:3306/DB-invoice
     username: ${USER_DB}
     password: ${PASS_DB}
   jpa:
