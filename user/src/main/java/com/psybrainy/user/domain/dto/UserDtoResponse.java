@@ -1,0 +1,10 @@
+package com.psybrainy.user.domain.dto;
+
+public class UserDtoResponse {
+
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String photo;
+}
