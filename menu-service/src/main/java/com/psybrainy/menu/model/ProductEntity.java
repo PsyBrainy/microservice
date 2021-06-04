@@ -16,6 +16,11 @@ import javax.persistence.*;
 public class ProductEntity {
 
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private Long idProduct;
+
     @Column(name = "name")
     private String name;
 

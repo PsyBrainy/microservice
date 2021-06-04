@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public  ResponseEntity<ProductResponce> save(@RequestBody ProductRequest productRequest){
+    public  ResponseEntity<ProductResponce> save(@RequestBody ProductRequest productRequest)throws NotFoundException{
         return new ResponseEntity<>(productService.save(productRequest), HttpStatus.CREATED);
     }
 

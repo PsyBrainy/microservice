@@ -1,6 +1,7 @@
 package com.psybrainy.menu.service.impl;
 
 import com.psybrainy.menu.constants.ConstantExceptionMessage;
+import com.psybrainy.menu.crud.CategoryCrudRepository;
 import com.psybrainy.menu.crud.ProductCrudRepository;
 import com.psybrainy.menu.dto.ProductRequest;
 import com.psybrainy.menu.dto.ProductResponce;
@@ -18,6 +19,9 @@ public class ProductService implements IProductService {
 
     @Autowired
     private ProductCrudRepository repo;
+
+    @Autowired
+    private CategoryCrudRepository categoryRepo;
 
     @Autowired
     private  ModelMapper mapper;
@@ -42,9 +46,10 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ProductResponce save(ProductRequest productRequest) {
+    public ProductResponce save(ProductRequest productRequest) throws NotFoundException{
 
         ProductEntity productEntity = dtoToEntity(productRequest);
+        productEntity.setCategory(categoryRepo.findByName(productRequest.getCategory()).orElseThrow(()->new NotFoundException("no, ni ahi")));
 
         ProductEntity productSave = repo.save(productEntity);
 
