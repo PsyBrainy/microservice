@@ -33,6 +33,9 @@ public class ProductEntity {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "photo")
+    private String photo;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;

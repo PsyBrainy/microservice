@@ -34,6 +34,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.save(productRequest), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public  ResponseEntity<ProductResponce> update(@PathVariable("id")Long idProduct , @RequestBody ProductRequest productRequest)throws NotFoundException{
+        return new ResponseEntity<>(productService.update(idProduct ,productRequest), HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/delete/{id}")
     public  ResponseEntity delete(@PathVariable("id") Long productId){
         if (productService.delete(productId)) {

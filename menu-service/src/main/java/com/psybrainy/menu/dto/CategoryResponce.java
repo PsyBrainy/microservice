@@ -9,17 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponce {
-
-    private Long id;
+public class CategoryResponce {
 
     private String name;
-
-    private String description;
-
-    private Double price;
-
-    private String photo;
-
-    private CategoryResponce category;
 }

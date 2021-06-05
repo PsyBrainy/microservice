@@ -15,7 +15,7 @@ public class ProductRequest {
 
     private String category;
 
-    private String status;
+    private String photo;
 
 
 }
