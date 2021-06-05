@@ -40,7 +40,8 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponce getproduct(Long productId) throws NotFoundException {
 
-        ProductEntity productEntity = repo.findById(productId).orElseThrow(()-> new NotFoundException(ConstantExceptionMessage.MSG_NOT_FOUND_PRODUCT));
+        ProductEntity productEntity = repo.findById(productId)
+                .orElseThrow(()-> new NotFoundException(ConstantExceptionMessage.MSG_NOT_FOUND_PRODUCT));
 
         return entityToDto(productEntity);
     }
@@ -49,7 +50,10 @@ public class ProductService implements IProductService {
     public ProductResponce save(ProductRequest productRequest) throws NotFoundException{
 
         ProductEntity productEntity = dtoToEntity(productRequest);
-        productEntity.setCategory(categoryRepo.findByName(productRequest.getCategory()).orElseThrow(()->new NotFoundException("no, ni ahi")));
+        productEntity
+                .setCategory(categoryRepo
+                        .findByName(productRequest.getCategory())
+                        .orElseThrow(()->new NotFoundException("no, ni ahi")));
 
         ProductEntity productSave = repo.save(productEntity);
 
