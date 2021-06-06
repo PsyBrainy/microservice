@@ -29,6 +29,11 @@ public class ProductController {
         return new ResponseEntity(productService.getproduct(productId), HttpStatus.OK);
     }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<ProductRequest>> getproductByCategory(@PathVariable("id") Long categoryId) throws NotFoundException {
+        return new ResponseEntity(productService.getByCategory(categoryId), HttpStatus.OK);
+    }
+
     @PostMapping("/save")
     public  ResponseEntity<ProductResponce> save(@RequestBody ProductRequest productRequest)throws NotFoundException{
         return new ResponseEntity<>(productService.save(productRequest), HttpStatus.CREATED);

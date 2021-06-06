@@ -11,7 +11,6 @@ import com.psybrainy.menu.model.CategoryEntity;
 import com.psybrainy.menu.model.ProductEntity;
 import com.psybrainy.menu.service.IProductService;
 import javassist.NotFoundException;
-import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,24 +50,28 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<ProductResponce> getByCategory(Long categoryId) throws NotFoundException{
+        List<ProductEntity> productEntityList = repo.findByCategory(categoryId).orElseThrow(()-> new NotFoundException(ConstantExceptionMessage.MSG_NOT_FOUND_PRODUCT_CATEGORY));
+
+        return productEntityList
+                .stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public ProductResponce save(ProductRequest productRequest) throws NotFoundException{
 
         if (productRequest.getName().isEmpty()){
             throw new BadRequestException(ConstantExceptionMessage.MSG_BAD_REQUEST_PRODUCT_NAME);
         }else if (productRequest.getCategory().isEmpty()){
-            productRequest.setCategory("Otros");
+            throw new BadRequestException(ConstantExceptionMessage.MSG_NOT_FOUND_PRODUCT_CATEGORY_NULL);
         }else if (productRequest.getPrice() == null){
             throw new BadRequestException(ConstantExceptionMessage.MSG_BAD_REQUEST_PRODUCT_PRICE);
         }
 
         ProductEntity productEntity = dtoToEntity(productRequest);
-        productEntity
-                .setCategory(categoryRepo
-                        .findByName(productRequest.getCategory())
-                        .orElse(categoryRepo.save(CategoryEntity
-                                .builder()
-                                .name(productRequest.getCategory())
-                                .build())));
+        productEntity.setCategory(categoryRepo.findByName(productRequest.getCategory()).orElseThrow(()-> new NotFoundException(ConstantExceptionMessage.MSG_NOT_FOUND_PRODUCT_CATEGORY_NAME)));
 
         ProductEntity productSave = repo.save(productEntity);
 
@@ -96,16 +99,12 @@ public class ProductService implements IProductService {
         }
 
         CategoryEntity categoryEntity = categoryRepo.findByName(productRequest.getCategory())
-                .orElse(categoryRepo.save(CategoryEntity
-                        .builder()
-                        .name(productRequest.getCategory())
-                        .build()));
+                .orElseThrow(()-> new NotFoundException(ConstantExceptionMessage.MSG_NOT_FOUND_PRODUCT_CATEGORY_NAME));
 
         productEntity.setCategory(categoryEntity);
 
         return entityToDto(repo.save(productEntity));
     }
-
 
     @Override
     public boolean delete(Long productId) {

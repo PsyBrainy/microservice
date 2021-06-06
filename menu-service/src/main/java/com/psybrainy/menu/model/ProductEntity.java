@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -13,6 +15,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@SQLDelete(sql = "UPDATE users SET status=true WHERE id=?")
+@Where(clause = "status = false")
 public class ProductEntity {
 
 
@@ -31,7 +35,7 @@ public class ProductEntity {
     private Double price;
 
     @Column(name = "status")
-    private String status;
+    private Boolean status;
 
     @Column(name = "photo")
     private String photo;
